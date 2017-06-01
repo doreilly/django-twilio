@@ -5,6 +5,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.test import TestCase
 from twilio import twiml
+from twilio.twiml.voice_response import VoiceResponse
+from twilio.twiml.messaging_response import MessagingResponse
 
 from django_twilio.decorators import twilio_view
 from django.views.generic import View
@@ -94,7 +96,7 @@ def verb_view(request):
     """
     A simple test view that returns a ``twilio.Verb`` object.
     """
-    r = twiml.Response()
+    r = VoiceResponse()
     r.reject()
     return r
 
@@ -106,12 +108,12 @@ class VerbView(View):
         return super(VerbView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        r = twiml.Response()
+        r = VoiceResponse()
         r.reject()
         return r
 
     def post(self, request):
-        r = twiml.Response()
+        r = VoiceResponse()
         r.reject()
         return r
 

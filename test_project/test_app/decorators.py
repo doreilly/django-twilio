@@ -7,6 +7,9 @@ from django.test import Client, TestCase
 from django.test.utils import override_settings
 
 from twilio import twiml
+from twilio.twiml.voice_response import VoiceResponse
+from twilio.twiml.messaging_response import MessagingResponse
+
 from django_dynamic_fixture import G
 
 from django_twilio.models import Caller
@@ -140,7 +143,7 @@ class TwilioViewTestCase(TestCase):
         with override_settings(DEBUG=False):
             request = self.factory.post(self.str_uri, {'From': '+13333333333'})
             response = str_view(request)
-            r = twiml.Response()
+            r = VoiceResponse()
             r.reject()
             self.assertEquals(
                 response.content,
@@ -149,7 +152,7 @@ class TwilioViewTestCase(TestCase):
         with override_settings(DEBUG=True):
             request = self.factory.post(self.str_uri, {'From': '+13333333333'})
             response = str_view(request)
-            r = twiml.Response()
+            r = VoiceResponse()
             r.reject()
             self.assertEquals(
                 response.content,
@@ -160,7 +163,7 @@ class TwilioViewTestCase(TestCase):
         with override_settings(DEBUG=False):
             request = self.factory.post(self.str_class_uri, {'From': '+13333333333'})
             response = StrView.as_view()(request)
-            r = twiml.Response()
+            r = VoiceResponse()
             r.reject()
             self.assertEquals(
                 response.content,
@@ -169,7 +172,7 @@ class TwilioViewTestCase(TestCase):
         with override_settings(DEBUG=True):
             request = self.factory.post(self.str_class_uri, {'From': '+13333333333'})
             response = StrView.as_view()(request)
-            r = twiml.Response()
+            r = VoiceResponse()
             r.reject()
             self.assertEquals(
                 response.content,
