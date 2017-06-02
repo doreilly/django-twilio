@@ -65,8 +65,9 @@ def get_blacklisted_response(request):
     :returns: HttpResponse if the user requesting services is blacklisted, None
         otherwise.
     """
+    querydict = request.POST if request.method == 'POST' else request.GET
     try:
-        caller = Caller.objects.get(phone_number=request.REQUEST['From'])
+        caller = Caller.objects.get(phone_number=querydict['From'])
         if caller.blacklisted:
             r = VoiceResponse()
             r.reject()
